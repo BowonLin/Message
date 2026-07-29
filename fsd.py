@@ -3,7 +3,7 @@ import openpyxl
 from openpyxl.styles import Font, Alignment, PatternFill, Border, Side
 
 file_path = 'letter.xlsx'
-df = pd.read_excel(file_path)
+df = pd.read_excel(file_path, header=None)
 
 # 定義目標名單
 name_list = [
@@ -25,7 +25,7 @@ for index, row in df.iterrows():
         sender = str(sender).strip()
     
     # 過濾掉所有空白格，只留下有實體字內容的
-    cols_with_vals = [(df.columns[c], row.iloc[c]) for c in range(1, len(row)) if pd.notna(row.iloc[c])]
+    cols_with_vals = [(df.columns[c], row.iloc[c]) for c in range(1, len(row)) if pd.notna(row.iloc[c]) and str(row.iloc[c]).strip() != ""]
     
     # 掃描有字的所有格子
     for idx, (col_name, val) in enumerate(cols_with_vals):
